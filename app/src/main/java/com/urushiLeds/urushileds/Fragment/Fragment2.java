@@ -19,8 +19,13 @@ public class Fragment2 extends Fragment {
 
     private Switch mSwitch_fmajor,mSwitch_sMajor,mSwitch_sMax,mSwitch_fMax,mswitch_manual;
     private ImageButton ib_back;
-    public final static String DATA_RECEIVE = "data_receive";
     LocalDataManager localDataManager;
+
+    public static final String MODEL_FMAJOR = "fmajor";
+    public static final String MODEL_SMAJOR = "smajor";
+    public static final String MODEL_FMAX = "fmax";
+    public static final String MODEL_SMAX = "smax";
+    public static final String MODEL_MANUAL = "manual";
 
     @Nullable
     @Override
@@ -30,6 +35,40 @@ public class Fragment2 extends Fragment {
         init(view);
 
         localDataManager = new LocalDataManager();
+        String model = localDataManager.getSharedPreference(getContext(),"model","manual");
+        if (model.equals(MODEL_MANUAL)){
+            mswitch_manual.setChecked(true);
+            mSwitch_fmajor.setChecked(false);
+            mSwitch_sMajor.setChecked(false);
+            mSwitch_fMax.setChecked(false);
+            mSwitch_sMax.setChecked(false);
+        }else if (model.equals(MODEL_FMAJOR)){
+            mswitch_manual.setChecked(false);
+            mSwitch_fmajor.setChecked(true);
+            mSwitch_sMajor.setChecked(false);
+            mSwitch_fMax.setChecked(false);
+            mSwitch_sMax.setChecked(false);
+        }else if (model.equals(MODEL_SMAJOR)){
+            mswitch_manual.setChecked(false);
+            mSwitch_fmajor.setChecked(false);
+            mSwitch_sMajor.setChecked(true);
+            mSwitch_fMax.setChecked(false);
+            mSwitch_sMax.setChecked(false);
+        }else if (model.equals(MODEL_FMAX)){
+            mswitch_manual.setChecked(false);
+            mSwitch_fmajor.setChecked(false);
+            mSwitch_sMajor.setChecked(false);
+            mSwitch_fMax.setChecked(true);
+            mSwitch_sMax.setChecked(false);
+        }else if (model.equals(MODEL_SMAX)){
+            mswitch_manual.setChecked(false);
+            mSwitch_fmajor.setChecked(false);
+            mSwitch_sMajor.setChecked(false);
+            mSwitch_fMax.setChecked(false);
+            mSwitch_sMax.setChecked(true);
+        }
+
+        switchSettings();
 
         return view;
     }
@@ -41,7 +80,6 @@ public class Fragment2 extends Fragment {
         mSwitch_sMax = view.findViewById(R.id.sw_smax);
         mswitch_manual = view.findViewById(R.id.sw_manual);
         ib_back = view.findViewById(R.id.ib_back);
-        switchSettings();
 
         ib_click();
     }
@@ -52,11 +90,11 @@ public class Fragment2 extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked){
-                    mSwitch_sMax.setText("Açık");
-                    localDataManager.setSharedPreference(getContext(),"model","smax");
-                    sendDatatoFragment("model","smax");
+                    mSwitch_sMax.setText("AKTİF");
+                    localDataManager.setSharedPreference(getContext(),"model",MODEL_SMAX);
+                    sendDatatoFragment("model",MODEL_SMAX);
                 }else{
-                    mSwitch_sMax.setText("Kapalı");
+                    mSwitch_sMax.setText("PASİF");
                 }
 
             }
@@ -67,11 +105,11 @@ public class Fragment2 extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked){
-                    localDataManager.setSharedPreference(getContext(),"model","smajor");
-                    mSwitch_sMajor.setText("Açık");
-                    sendDatatoFragment("model","smajor");
+                    localDataManager.setSharedPreference(getContext(),"model",MODEL_SMAJOR);
+                    mSwitch_sMajor.setText("AKTİF");
+                    sendDatatoFragment("model",MODEL_SMAJOR);
                 }else{
-                    mSwitch_sMajor.setText("Kapalı");
+                    mSwitch_sMajor.setText("PASİF");
                 }
 
             }
@@ -82,11 +120,11 @@ public class Fragment2 extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked){
-                    localDataManager.setSharedPreference(getContext(),"model","fmax");
-                    mSwitch_fMax.setText("Açık");
-                    sendDatatoFragment("model","fmax");
+                    localDataManager.setSharedPreference(getContext(),"model",MODEL_FMAX);
+                    mSwitch_fMax.setText("AKTİF");
+                    sendDatatoFragment("model",MODEL_FMAX);
                 }else{
-                    mSwitch_fMax.setText("Kapalı");
+                    mSwitch_fMax.setText("PASİF");
                 }
 
             }
@@ -97,11 +135,11 @@ public class Fragment2 extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked){
-                    localDataManager.setSharedPreference(getContext(),"model","fmajor");
-                    mSwitch_fmajor.setText("Açık");
-                    sendDatatoFragment("model","fmajor");
+                    localDataManager.setSharedPreference(getContext(),"model",MODEL_FMAJOR);
+                    mSwitch_fmajor.setText("AKTİF");
+                    sendDatatoFragment("model",MODEL_FMAJOR);
                 }else{
-                    mSwitch_fmajor.setText("Kapalı");
+                    mSwitch_fmajor.setText("PASİF");
                 }
 
             }
@@ -111,11 +149,11 @@ public class Fragment2 extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    localDataManager.setSharedPreference(getContext(),"model","manual");
-                    mswitch_manual.setText("Açık");
-                    sendDatatoFragment("model","manual");
+                    localDataManager.setSharedPreference(getContext(),"model",MODEL_MANUAL);
+                    mswitch_manual.setText("AKTİF");
+                    sendDatatoFragment("model",MODEL_MANUAL);
                 }else{
-                    mswitch_manual.setText("Kapalı");
+                    mswitch_manual.setText("PASİF");
                 }
             }
         });

@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Gün Doğumu"
+            android:text="Kanal 1"
             android:textColor="@color/white" />
 
         <LinearLayout
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Güneş"
+            android:text="Kanal 2"
             android:textColor="@color/white" />
 
         <LinearLayout
@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Gün Batımı"
+            android:text="Kanal 3"
             android:textColor="@color/white" />
 
         <LinearLayout
@@ -122,7 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Akşam"
+            android:text="Kanal 4"
             android:textColor="@color/white" />
 
         <LinearLayout
