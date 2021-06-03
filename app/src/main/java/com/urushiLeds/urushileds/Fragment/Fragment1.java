@@ -395,14 +395,14 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
 
         selectedChannel = sp_channel.getSelectedItem().toString();
 
-        String gdh = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gdh","7");
-        String gdm = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gdm","0");
+        String gdh = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gdh","07");
+        String gdm = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gdm","00");
         String gh = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gh","12");
-        String gm = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gm","0");
+        String gm = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gm","00");
         String gbh = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gbh","17");
-        String gbm = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gbm","0");
+        String gbm = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gbm","00");
         String ah = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"ah","22");
-        String am = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"am","0");
+        String am = localDataManager.getSharedPreference(getContext(),model+selectedChannel+"am","00");
 
         btn_gd.setText("Gün Doğumu "+gdh+":"+gdm);
         btn_g.setText("Güneş "+gh+":"+gm);
@@ -532,6 +532,15 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
         NumberPicker np2 = dialog.findViewById(R.id.npd2);
         TextView tv_timeTitle = dialog.findViewById(R.id.tv_timeTitle);
 
+        float mgdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gdh","7"));
+        float mgdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gdm","0"));
+        float mgh  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gh","12"));
+        float mgm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gm","0"));
+        float mgbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gbh","17"));
+        float mgbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gbm","0"));
+        float mah = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"ah","22"));
+        float mam = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"am","0"));
+
         tv_timeTitle.setText(timename);
 
         np1.setMaxValue(DateTime.hournp1.length-1);
@@ -547,14 +556,6 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
         btn_setTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float mgdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gdh","7"));
-                float mgdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gdm","0"));
-                float mgh  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gh","12"));
-                float mgm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gm","0"));
-                float mgbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gbh","17"));
-                float mgbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"gbm","0"));
-                float mah = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"ah","22"));
-                float mam = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+selectedChannel+"am","0"));
 
                 String alarm1_hour = DateTime.hournp1[np1.getValue()];
                 String alarm1_minute = DateTime.minutenp2[np2.getValue()];
