@@ -56,23 +56,21 @@ public class MainActivity extends AppCompatActivity{
     SendReceive sendReceive;
     ArrayList<String> bleList = new ArrayList<>();
 
+    private InputStream inputStream;
+    private OutputStream outputStream;
+
     static final String DATA_ACK = "S";
 
-    static final int STATE_LISTENING = 1;
-    static final int STATE_CONNECTING = 2;
-    static final int STATE_CONNECTED = 3;
-    static final int STATE_CONNECTION_FAILED = 4;
-    static final int STATE_MESSAGE_RECEIVED = 5;
-    static final int STATE_MESSAGE_NEXTCONNECTION_WAIT = 6;
-    static final int STATE_MESSAGE_NEXTCONNECTION_CONNECTED = 7;
-    static final int STATE_MESSAGE_ACK_WAIT = 8;
-    static final int STATE_MESSAGE_ACK_RECEIVED = 9;
-
-    final static String DATA_RECEIVE = "data_receive";
+    static final int STATE_CONNECTED = 1;
+    static final int STATE_CONNECTION_FAILED = 2;
+    static final int STATE_MESSAGE_RECEIVED = 3;
+    static final int STATE_MESSAGE_NEXTCONNECTION_WAIT = 4;
+    static final int STATE_MESSAGE_NEXTCONNECTION_CONNECTED = 5;
+    static final int STATE_MESSAGE_ACK_WAIT = 6;
+    static final int STATE_MESSAGE_WRONG_ACK_RECEIVED = 7;
 
     private String tempMsg = null;
 
-    private static final String APP_NAME = "BTAkvaryum";
     private static final UUID ESP32_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private BluetoothDevice device;
@@ -112,6 +110,7 @@ public class MainActivity extends AppCompatActivity{
 
         progress = ProgressDialog.show(MainActivity.this, "Baglanıyor...", "Lütfen Bekleyin");
 
+        // Gelen device id ile bluetooth bağlantısını kur.
         if (bleList.size()>0){
             device_id = bleList.get(0);
             clientClass = new ClientClass(device_id);
@@ -128,11 +127,7 @@ public class MainActivity extends AppCompatActivity{
                         break;
                     case R.id.action_back:
                         if (socket.isConnected()){
-                            try {
-                                socket.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            closeBluetooth();
                         }
                         startActivity(new Intent(MainActivity.this,BluetoothScanActivity.class));
                         finish();
@@ -211,131 +206,91 @@ public class MainActivity extends AppCompatActivity{
         public boolean handleMessage(@NonNull Message msg) {
 
             switch (msg.what){
-                case STATE_LISTENING :
-                    tv_status.setText("Dinlemede");
-                    tv_status.setTextColor(Color.MAGENTA);
-                    break;
-                case STATE_CONNECTING :
-                    tv_status.setText("Bağlanıyor ... ");
-                    tv_status.setTextColor(Color.BLUE);
-                    break;
                 case STATE_CONNECTED :
                     tv_status.setText("Bağlandı ... ");
                     tv_status.setTextColor(Color.GREEN);
+                    Log.e(TAG,"Bağlandı");
+                    if (i>0){
+                        if(socket.isConnected()){
+                            sendReceive.write(txData);
+                            Log.e(TAG,"Diğer cihaza aynı veriler gönderildi");
+                        }
+                        Message message = Message.obtain();
+                        message.what = STATE_MESSAGE_ACK_WAIT;
+                        handler.sendMessage(message);
+                    }
                     progress.dismiss();
                     break;
                 case STATE_CONNECTION_FAILED :
                     tv_status.setText("Bağlantı Hatası ... ");
                     tv_status.setTextColor(Color.RED);
+                    Log.e(TAG,"Bağlantı Hatası");
                     progress.dismiss();
                     if (socket.isConnected()){
-                        try {
-                            socket.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                       closeBluetooth();
                     }
                     if (i<bleList.size()){
-                        i ++;
-                        try {
-                            Log.e("size","size : "+bleList.size()+" i : " + i);
-                            device_id = bleList.get(i);
-                            clientClass = new ClientClass(device_id);
-                            clientClass.start();
-                            Message message = Message.obtain();
-                            message.what = STATE_MESSAGE_NEXTCONNECTION_WAIT;
-                            handler.sendMessage(message);
-
-                            if (socket.isConnected()){
-                                sendReceive.write(txData);
-                                Message message2 = Message.obtain();
-                                message.what = STATE_MESSAGE_ACK_WAIT;
-                                handler.sendMessage(message2);
-                            }
-                        }catch (Exception e){
-                            Log.e(TAG,e.getLocalizedMessage());
-                        }
-
+                        Message message = Message.obtain();
+                        message.what = STATE_MESSAGE_NEXTCONNECTION_WAIT;
+                        handler.sendMessage(message);
                     }
                     break;
                 case STATE_MESSAGE_RECEIVED :
-
-                    byte[] readBuffer = (byte[]) msg.obj;
+                    /*byte[] readBuffer = (byte[]) msg.obj;
                     tempMsg = new String(readBuffer,0,msg.arg1);
-
-                    Toast.makeText(getApplicationContext(),"Gelen veri : " + tempMsg,Toast.LENGTH_SHORT).show();
-
-                    //  ACK gelene kadar sürekli dinle ve kontrol et
+                    Log.e(TAG,"Mesaj Alındı Mesaj : "+tempMsg);*/
+                    tempMsg = getMessage(msg);
 
                     if (tempMsg.equals(DATA_ACK)){
-                        if (i<bleList.size()){
-                            i ++;
-                            Message message2 = Message.obtain();
-                            message2.what = STATE_MESSAGE_ACK_RECEIVED;
-                            handler.sendMessage(message2);
+                        Log.e(TAG,"Mesaj Doğru Alındı");
 
-                            if (socket.isConnected()){
-                                try {
-                                    socket.close();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            device_id = bleList.get(i);
-                            clientClass = new ClientClass(device_id);
-                            clientClass.start();
-
-                            try {
-                                sendReceive.write(txData);
-                                Toast.makeText(getApplicationContext(),"Diğer cihaza veri gönderildi",Toast.LENGTH_SHORT).show();
-                                Message message = Message.obtain();
-                                message.what = STATE_MESSAGE_ACK_WAIT;
-                                handler.sendMessage(message);
-                            }catch (Exception e){
-                                Log.e(TAG,e.getLocalizedMessage());
-                            }
-                        }
+                        Message message = Message.obtain();
+                        message.what = STATE_MESSAGE_NEXTCONNECTION_WAIT;
+                        handler.sendMessage(message);
 
                     }else{
-                        progress.dismiss();
-/*                            if (sendReceive.isAlive()){
-                                sendReceive.currentThread().interrupt();
-                                sendReceive = null;
-                            }
-                            if (clientClass.isAlive()){
-                                clientClass.currentThread().interrupt();
-                                clientClass = null;
-                            }*/
-
-                        if (socket.isConnected()){
-
-                            try {
-                                socket.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
+                        Log.e(TAG,"Yanlış doğrulama kodu alındı");
+                        Message message = Message.obtain();
+                        message.what = STATE_MESSAGE_WRONG_ACK_RECEIVED;
+                        handler.sendMessage(message);
                     }
                     break;
                 case STATE_MESSAGE_NEXTCONNECTION_WAIT:
+                    Log.e(TAG,"Diğer cihaza bağlanıyor ...");
                     progress = ProgressDialog.show(MainActivity.this, "Diğer Cihaza Baglanıyor...", "Lütfen Bekleyin");
-                    break;
-                case STATE_MESSAGE_NEXTCONNECTION_CONNECTED:
-                    tv_status.setText("Status : Bağlandı ... ");
-                    progress.dismiss();
+
+                    i++;
+                    if (i<bleList.size()){
+                        // Bluetooth bağlantısını kes.
+                        if (socket.isConnected()){
+                            closeBluetooth();
+                        }
+
+                        device_id = bleList.get(i);
+                        Log.e(TAG,"Diğer cihazın bluetooth id si alınıyor. device _id : "+device_id);
+                        Log.e(TAG,"Diğer cihazın bluetooth id si ile yeni client class oluşturuldu başlatıldı.");
+
+                        clientClass = new ClientClass(device_id);
+                        clientClass.start();
+
+                    }else{
+                        Log.e(TAG,"Tüm cihazlara veriler gönderildi.");
+                        closeBluetooth();
+                    }
+
                     break;
                 case STATE_MESSAGE_ACK_WAIT :
+                    Log.e(TAG,"Doğrulama kodu bekleniyor ...");
                     trial ++;
                     progress = ProgressDialog.show(MainActivity.this, "ACK bekleniyor ...", "Lütfen Bekleyin");
                     // 30.sn ACK gelmesini bekle
-                    timerHandler.postDelayed(timerRunnable, 30000);
+                    //fixme yorum satırı yapıldı
+                    //timerHandler.postDelayed(timerRunnable, 30000);
                     break;
-                case STATE_MESSAGE_ACK_RECEIVED :
-                    trial = 0;
+                case STATE_MESSAGE_WRONG_ACK_RECEIVED:
+                    Log.e(TAG,"Yanlış Doğrulama kodu alındı.");
+                    //todo yanlış ACK geldiğinde burası yapılacak !!!
                     progress.dismiss();
-                    timerHandler.removeCallbacks(timerRunnable);
                     break;
             }
             return false;
@@ -359,34 +314,39 @@ public class MainActivity extends AppCompatActivity{
             }else {
                 trial = 0;
                 if (socket.isConnected()){
-                    try {
-                        socket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    closeBluetooth();
                 }
                 if (i<bleList.size()){
-                    i ++;
+                    try {
+                        i ++;
+                        device_id = bleList.get(i);
+                        clientClass = new ClientClass(device_id);
+                        clientClass.start();
 
-                    device_id = bleList.get(i);
-                    clientClass = new ClientClass(device_id);
-                    clientClass.start();
+                        sendReceive.write(txData);
+                        Log.e(TAG,"399. Diğer cihaza veri gönderildi.");
 
-                    sendReceive.write(txData);
-                    Toast.makeText(getApplicationContext(),"Diğer cihaza veri gönderildi",Toast.LENGTH_SHORT).show();
+                        Message message = Message.obtain();
+                        message.what = STATE_MESSAGE_ACK_WAIT;
+                        handler.sendMessage(message);
 
-                    Message message = Message.obtain();
-                    message.what = STATE_MESSAGE_ACK_WAIT;
-                    handler.sendMessage(message);
+                    }catch (Exception e){
+                        Log.e(TAG,e.getLocalizedMessage());
+                    }
                 }
-                timerHandler.removeCallbacks(timerRunnable);
+                //timerHandler.removeCallbacks(timerRunnable);
                 progress.dismiss();
             }
         }
     };
 
     public void fab_bottom(View view) {
-
+        // Gönderilecek değerlerin hafızadan çekilmesi işlemi
+        try {
+            socket.getOutputStream().write(0x55);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         String model = localDataManager.getSharedPreference(getApplicationContext(),"model","");
         if (model.equals("fmajor")){
 
@@ -455,7 +415,7 @@ public class MainActivity extends AppCompatActivity{
                 txData[i] = 0;
             }
 
-            txData[55] = 0x66;
+            txData[54] = 0x66;
 
         }else if (model.equals("smajor")){
             txData[0] = 0x65;
@@ -870,6 +830,7 @@ public class MainActivity extends AppCompatActivity{
         try {
             sendReceive.write(txData);
             Toast.makeText(getApplicationContext(),"Veriler gönderildi",Toast.LENGTH_SHORT).show();
+            Log.e(TAG,"Veriler gönderildi.");
             Message message = Message.obtain();
             message.what = STATE_MESSAGE_ACK_WAIT;
             handler.sendMessage(message);
@@ -884,7 +845,6 @@ public class MainActivity extends AppCompatActivity{
 
         public ClientClass (String device_id){
             device = bluetoothAdapter.getRemoteDevice(device_id);
-            //device = device1;
             try {
                 socket = device.createRfcommSocketToServiceRecord(ESP32_UUID);
             } catch (IOException e) {
@@ -896,15 +856,14 @@ public class MainActivity extends AppCompatActivity{
             try {
                 // bağlantı kurulu ise önce kapat
                 if (socket.isConnected()){
-                    socket.close();
+                   closeBluetooth();
                 }
                 socket.connect();
+                sendReceive = new SendReceive(socket);
+                sendReceive.start();
                 Message message = Message.obtain();
                 message.what=STATE_CONNECTED;
                 handler.sendMessage(message);
-
-                sendReceive = new SendReceive(socket);
-                sendReceive.start();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -918,8 +877,6 @@ public class MainActivity extends AppCompatActivity{
 
     private class SendReceive extends Thread{
         private final BluetoothSocket bluetoothSocket;
-        private final InputStream inputStream;
-        private final OutputStream outputStream;
 
         public SendReceive(BluetoothSocket socket){
             bluetoothSocket = socket;
@@ -959,6 +916,39 @@ public class MainActivity extends AppCompatActivity{
                 e.printStackTrace();
             }
         }
+    }
+
+    private void closeBluetooth(){
+        if (inputStream != null){
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (outputStream != null){
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (socket != null){
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Log.e(TAG,"Bluetooth soket kapatıldı");
+    }
+
+    private String getMessage(Message msg){
+        byte[] readBuffer = (byte[]) msg.obj;
+        return new String(readBuffer,0,msg.arg1);
     }
 
 }
