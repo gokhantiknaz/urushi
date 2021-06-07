@@ -105,6 +105,7 @@ public class BluetoothScanActivity extends AppCompatActivity {
 
     public void btn_scan(View view) {
         if (bleDeviceList.isEmpty() && !bluetoothAdapter.getAddress().isEmpty()){
+            arrayList_bleDevices.clear();
             Set<BluetoothDevice> bt = bluetoothAdapter.getBondedDevices();
             for (BluetoothDevice bluetoothDevice : bt){
                 arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(),bluetoothDevice.getAddress()));
