@@ -17,7 +17,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv_sb1title"
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/alice"
+            android:gravity="center"
+            android:text="Phaton Palette"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_testsb1title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

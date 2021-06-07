@@ -92,6 +92,7 @@ public class Fragment2 extends Fragment {
                 if (isChecked){
                     mSwitch_sMax.setText("AKTİF");
                     localDataManager.setSharedPreference(getContext(),"model",MODEL_SMAX);
+                    localDataManager.setSharedPreference(getContext(),"test_model","false");
                     sendDatatoFragment("model",MODEL_SMAX);
                 }else{
                     mSwitch_sMax.setText("PASİF");
@@ -106,6 +107,7 @@ public class Fragment2 extends Fragment {
 
                 if (isChecked){
                     localDataManager.setSharedPreference(getContext(),"model",MODEL_SMAJOR);
+                    localDataManager.setSharedPreference(getContext(),"test_model","false");
                     mSwitch_sMajor.setText("AKTİF");
                     sendDatatoFragment("model",MODEL_SMAJOR);
                 }else{
@@ -121,6 +123,7 @@ public class Fragment2 extends Fragment {
 
                 if (isChecked){
                     localDataManager.setSharedPreference(getContext(),"model",MODEL_FMAX);
+                    localDataManager.setSharedPreference(getContext(),"test_model","false");
                     mSwitch_fMax.setText("AKTİF");
                     sendDatatoFragment("model",MODEL_FMAX);
                 }else{
@@ -136,6 +139,7 @@ public class Fragment2 extends Fragment {
 
                 if (isChecked){
                     localDataManager.setSharedPreference(getContext(),"model",MODEL_FMAJOR);
+                    localDataManager.setSharedPreference(getContext(),"test_model","false");
                     mSwitch_fmajor.setText("AKTİF");
                     sendDatatoFragment("model",MODEL_FMAJOR);
                 }else{
@@ -150,6 +154,7 @@ public class Fragment2 extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     localDataManager.setSharedPreference(getContext(),"model",MODEL_MANUAL);
+                    localDataManager.setSharedPreference(getContext(),"test_model","false");
                     mswitch_manual.setText("AKTİF");
                     sendDatatoFragment("model",MODEL_MANUAL);
                 }else{

@@ -47,7 +47,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_sb1title"
+                    android:id="@+id/tv_testsb1title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -180,25 +180,24 @@
 
             </LinearLayout>
 
-            <HorizontalScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/btn_gd"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginEnd="50dp"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:text="Gün doğumu" />
 
@@ -207,19 +206,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginEnd="50dp"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
-
                         android:text="Güneş" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/btn_gb"
                         android:layout_width="wrap_content"
                         android:layout_height="40sp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginEnd="50dp"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
-
                         android:text="Gün Batımı" />
 
                     <Button
@@ -227,13 +233,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40sp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginEnd="50dp"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
-
                         android:text="Akşam" />
 
                 </LinearLayout>
-            </HorizontalScrollView>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

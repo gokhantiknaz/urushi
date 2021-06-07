@@ -208,7 +208,7 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
         tv_seekBar2 = view.findViewById(R.id.tv_seekBar2);
         tv_seekBar3 = view.findViewById(R.id.tv_seekBar3);
         tv_seekBar4 = view.findViewById(R.id.tv_seekBar4);
-        tv_sb1title = view.findViewById(R.id.tv_sb1title);
+        tv_sb1title = view.findViewById(R.id.tv_testsb1title);
         tv_sb2title = view.findViewById(R.id.tv_sb2title);
         tv_sb3title = view.findViewById(R.id.tv_sb3title);
         tv_sb4title = view.findViewById(R.id.tv_sb4title);
@@ -568,7 +568,7 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdh",alarm1_hour);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdm",alarm1_minute);
                     }else {
-                        Toast.makeText(getContext(),"Yanlış değer girdiniz gün doğumu vakti diğer vakitlerden küçük olmalıdır!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Yanlış değer girdiniz gün doğumu vakti diğer vakitlerden küçük olmalıdır!",Toast.LENGTH_LONG).show();
                     }
 
                 }else if (timename.equals("Güneş")){
@@ -579,7 +579,7 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gh",alarm1_hour);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gm",alarm1_minute);
                     }else {
-                        Toast.makeText(getContext(),"Yanlış değer girdiniz güneş vakti gün doğumundan büyük diğer vakitlerden küçük olmalıdır!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Yanlış değer girdiniz güneş vakti gün doğumundan büyük diğer vakitlerden küçük olmalıdır!",Toast.LENGTH_LONG).show();
                     }
 
                 }else if (timename.equals("Gün Batımı")){
@@ -590,7 +590,7 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbh",alarm1_hour);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbm",alarm1_minute);
                     }else {
-                        Toast.makeText(getContext(),"Yanlış değer girdiniz gün batımı vakti gün doğumundan, güneşten büyük akşam vaktinden küçük olmalıdır!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Yanlış değer girdiniz gün batımı vakti gün doğumundan, güneşten büyük akşam vaktinden küçük olmalıdır!",Toast.LENGTH_LONG).show();
                     }
                 }else if (timename.equals("Akşam")){
                     ah = Integer.parseInt(alarm1_hour);
@@ -600,7 +600,7 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"ah",alarm1_hour);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"am",alarm1_minute);
                     }else {
-                        Toast.makeText(getContext(),"Yanlış değer girdiniz akşam vakti diğer vakitlerden büyük olmalıdır!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Yanlış değer girdiniz akşam vakti diğer vakitlerden büyük olmalıdır!",Toast.LENGTH_LONG).show();
                     }
                 }
                 retrieveMemorizedDatas();
@@ -629,8 +629,8 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                 channels.add("Wide Spectrum");
                 setSpinner();
                 modelNo = MODEL_FMAJOR;
-                tv_sb1title.setText("Güneş");
-                tv_sb2title.setText("Gün Batımı");
+                tv_sb1title.setText("Gün Doğumu");
+                tv_sb2title.setText("Güneş");
                 seekBar3.setVisibility(View.VISIBLE);
                 seekBar4.setVisibility(View.VISIBLE);
                 tv_seekBar3.setVisibility(View.VISIBLE);
@@ -648,8 +648,8 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                 setSpinner();
 
                 modelNo = MODEL_SMAJOR;
-                tv_sb1title.setText("Güneş");
-                tv_sb2title.setText("Gün Batımı");
+                tv_sb1title.setText("Gün Doğumu");
+                tv_sb2title.setText("Güneş");
                 seekBar3.setVisibility(View.VISIBLE);
                 seekBar4.setVisibility(View.VISIBLE);
                 tv_seekBar3.setVisibility(View.VISIBLE);
@@ -694,7 +694,7 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
 
                 modelNo = MODEL_SMAX;
                 tv_sb1title.setText("Gün Doğumu");
-                tv_sb2title.setText("Günüş");
+                tv_sb2title.setText("Güneş");
                 tv_sb3title.setText("Gün Batımı");
                 tv_sb4title.setText("Akşam");
                 seekBar3.setVisibility(View.VISIBLE);
