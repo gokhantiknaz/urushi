@@ -564,7 +564,7 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                     gdh = Integer.parseInt(alarm1_hour);
                     gdm = Integer.parseInt(alarm1_minute);
                     if (gdh < mgh && gdh < mgbh && gdh < mah){
-                        btn_gd.setText("Gün Doğumu "+alarm1_hour+" : " + alarm1_minute);
+                        btn_gd.setText("Gün Doğumu "+alarm1_hour+":" + alarm1_minute);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdh",alarm1_hour);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdm",alarm1_minute);
                     }else {
@@ -574,8 +574,10 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                 }else if (timename.equals("Güneş")){
                     gh = Integer.parseInt(alarm1_hour);
                     gm = Integer.parseInt(alarm1_minute);
+                    Log.d(TAG, "güneş saat:"+gh+" güneş dakika : "+gm);
                     if (gh > mgdh && gh < mgbh && gh < mah){
-                        btn_g.setText("Güneş "+alarm1_hour+" : " + alarm1_minute);
+                        btn_g.setText("Güneş "+alarm1_hour+":"+alarm1_minute);
+                        Log.d(TAG, "Güneş "+alarm1_hour+":"+alarm1_minute);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gh",alarm1_hour);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gm",alarm1_minute);
                     }else {
@@ -586,7 +588,7 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                     gbh = Integer.parseInt(alarm1_hour);
                     gbm = Integer.parseInt(alarm1_minute);
                     if (gbh > mgdh && gbh > mgh && gbh < mah){
-                        btn_gb.setText("Gün Batımı "+alarm1_hour+" : " + alarm1_minute);
+                        btn_gb.setText("Gün Batımı "+alarm1_hour+":"+ alarm1_minute);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbh",alarm1_hour);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbm",alarm1_minute);
                     }else {
@@ -596,7 +598,7 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                     ah = Integer.parseInt(alarm1_hour);
                     am = Integer.parseInt(alarm1_minute);
                     if (ah > mgdh && ah > mgh && ah > mgbh){
-                        btn_a.setText("Akşam "+alarm1_hour+" : " + alarm1_minute);
+                        btn_a.setText("Akşam "+alarm1_hour+":" + alarm1_minute);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"ah",alarm1_hour);
                         localDataManager.setSharedPreference(getContext(),model+selectedChannel+"am",alarm1_minute);
                     }else {
@@ -894,55 +896,55 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
             String c1f4 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f4","0");
 
             float c1gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c1gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c1gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float c1gh  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float c1gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float c1gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c1gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c1gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c1gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float c1ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"ah","22"));
-            float c1am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","0"));
+            float c1am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","00"));
             mChannel = "Channel 2";
             String c2f1 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f1","0");
             String c2f2 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f2","0");
             String c2f3 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f3","0");
             String c2f4 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f4","0");
 
-            float c2gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c2gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c2gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","07"));
+            float c2gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float  c2gh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float  c2gm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float  c2gm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c2gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c2gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c2gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float  c2ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"ah","22"));
-            float  c2am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","0"));
+            float  c2am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","00"));
             mChannel = "Channel 3";
             String c3f1 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f1","0");
             String c3f2 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f2","0");
             String c3f3 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f3","0");
             String c3f4 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f4","0");
 
-            float c3gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c3gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c3gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","07"));
+            float c3gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float  c3gh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float  c3gm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float  c3gm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c3gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c3gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c3gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float  c3ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"ah","22"));
-            float  c3am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","0"));
+            float  c3am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","00"));
             mChannel = "Channel 4";
             String c4f1 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f1","0");
             String c4f2 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f2","0");
             String c4f3 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f3","0");
             String c4f4 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f4","0");
 
-            float c4gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c4gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c4gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","07"));
+            float c4gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float  c4gh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float  c4gm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float  c4gm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c4gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c4gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c4gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float  c4ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"ah","22"));
-            float  c4am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","0"));
+            float  c4am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","00"));
 
             refreshChart(entries,Integer.parseInt(c1f1),Integer.parseInt(c1f2),Integer.parseInt(c1f3),Integer.parseInt(c1f4), c1gdh/8f+c1gdm/100f,c1gh/8f+c1gm/100f,c1gbh/8f+c1gbm/100f,c1ah/8f+c1am/100f,lDataSet1,2,"Kanal 1",R.color.lighgray);
             refreshChart(entries2,Integer.parseInt(c2f1),Integer.parseInt(c2f2),Integer.parseInt(c2f3),Integer.parseInt(c2f4),c2gdh/8f+c2gdm/100f,c2gh/8f+c2gm/100f,c2gbh/8f+c2gbm/100f,c2ah/8f+c2am/100f,lDataSet2,2,"Kanal 2",R.color.lighgray);
@@ -953,25 +955,25 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
             String mChannel = "Cool White";
             String c1f1 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f2","0");
             String c1f2 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f3","0");
-            float c1gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c1gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c1gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","07"));
+            float c1gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float c1gh  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float c1gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float c1gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c1gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c1gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c1gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float c1ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(), model+mChannel+"ah","22"));
-            float c1am = Float.parseFloat(localDataManager.getSharedPreference(getContext(), model+mChannel+"am","0"));
+            float c1am = Float.parseFloat(localDataManager.getSharedPreference(getContext(), model+mChannel+"am","00"));
             mChannel = "Wide Spectrum";
             String c2f1 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f2","0");
             String c2f2 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f3","0");
-            float c2gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c2gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c2gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","07"));
+            float c2gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float c2gh  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float c2gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float c2gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c2gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c2gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c2gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float c2ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(), model+mChannel+"ah","22"));
-            float c2am = Float.parseFloat(localDataManager.getSharedPreference(getContext(), model+mChannel+"am","0"));
+            float c2am = Float.parseFloat(localDataManager.getSharedPreference(getContext(), model+mChannel+"am","00"));
 
             refreshChart(entries,0,Integer.parseInt(c1f1),Integer.parseInt(c1f2),0,c1gdh/8 + c1gdm/100,c1gh/8 + c1gm/100,c1gbh/8 + c1gbm/100,c1ah/8 + c1am/100,lDataSet1,2,"Cool White",R.color.lighgray);
             refreshChart(entries2,0,Integer.parseInt(c2f1),Integer.parseInt(c2f2),0,c2gdh/8 + c2gdm/100,c2gh/8 + c2gm/100,c2gbh/8 + c2gbm/100,c2ah/8 + c2am/100,lDataSet1,2,"Wide Spectrum",R.color.lighgray);
@@ -1068,53 +1070,53 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
             String c1f2 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f2","0");
             String c1f3 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f3","0");
             String c1f4 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f4","0");
-            float c1gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c1gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c1gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","07"));
+            float c1gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float c1gh  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float c1gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float c1gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c1gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c1gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c1gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float c1ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"ah","22"));
-            float c1am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","0"));
+            float c1am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","00"));
             mChannel = "Aqua Sun";
             String c2f1 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f1","0");
             String c2f2 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f2","0");
             String c2f3 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f3","0");
             String c2f4 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f4","0");
-            float c2gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c2gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c2gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","07"));
+            float c2gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float c2gh  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float c2gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float c2gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c2gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c2gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c2gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float c2ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"ah","22"));
-            float c2am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","0"));
+            float c2am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","00"));
             mChannel = "Magenta";
             String c3f1 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f1","0");
             String c3f2 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f2","0");
             String c3f3 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f3","0");
             String c3f4 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f4","0");
-            float c3gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c3gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c3gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","07"));
+            float c3gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float c3gh  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float c3gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float c3gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c3gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c3gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c3gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float c3ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"ah","22"));
-            float c3am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","0"));
+            float c3am = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"am","00"));
             mChannel = "Sky Blue";
             String c4f1 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f1","0");
             String c4f2 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f2","0");
             String c4f3 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f3","0");
             String c4f4 = localDataManager.getSharedPreference(getContext(),model+mChannel+"f4","0");
-            float c4gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","7"));
-            float c4gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","0"));
+            float c4gdh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdh","07"));
+            float c4gdm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gdm","00"));
             float c4gh  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gh","12"));
-            float c4gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","0"));
+            float c4gm  = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gm","00"));
             float c4gbh = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbh","17"));
-            float c4gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","0"));
+            float c4gbm = Float.parseFloat(localDataManager.getSharedPreference(getContext(),model+mChannel+"gbm","00"));
             float c4ah = Float.parseFloat(localDataManager.getSharedPreference(getContext(), model+mChannel+"ah","22"));
-            float c4am = Float.parseFloat(localDataManager.getSharedPreference(getContext(), model+mChannel+"am","0"));
+            float c4am = Float.parseFloat(localDataManager.getSharedPreference(getContext(), model+mChannel+"am","00"));
 
             refreshChart(entries,Integer.parseInt(c1f1),Integer.parseInt(c1f2),Integer.parseInt(c1f3),Integer.parseInt(c1f4),c1gdh/8 + c1gdm/100,c1gh/8 + c1gm/100,c1gbh/8 + c1gbm/100,c1ah/8 + c1am/100,lDataSet1,2,"Deep Blue",R.color.lighgray);
             refreshChart(entries2,Integer.parseInt(c2f1),Integer.parseInt(c2f2),Integer.parseInt(c2f3),Integer.parseInt(c2f4),c2gdh/8 + c2gdm/100,c2gh/8 + c2gm/100,c2gbh/8 + c2gbm/100,c2ah/8 + c2am/100,lDataSet2,2,"Aqua Sun",R.color.lighgray);

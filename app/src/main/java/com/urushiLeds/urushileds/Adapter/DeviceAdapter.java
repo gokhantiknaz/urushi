@@ -23,10 +23,10 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
     private CallBackDevice callBackDevice;
     private boolean iv_clicked = false;
     public int pos = 0;
-
     public void setCallback(CallBackDevice l){
         callBackDevice = l;
     }
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
