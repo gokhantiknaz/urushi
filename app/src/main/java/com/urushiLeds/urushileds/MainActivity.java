@@ -335,6 +335,8 @@ public class MainActivity extends AppCompatActivity{
     };
 
     public void fab_bottom(View view) {
+        // anlık saat ve dakika bilgisini al
+        getDateTime();
         fab_bottom.setEnabled(false);
         if (!socket.isConnected()){
             startActivity(new Intent(MainActivity.this,BluetoothScanActivity.class));
@@ -342,6 +344,8 @@ public class MainActivity extends AppCompatActivity{
         }
         String model = localDataManager.getSharedPreference(getApplicationContext(),"model","");
         String test_model = localDataManager.getSharedPreference(getApplicationContext(),"test_model","false");
+        Log.e(TAG, "fab_bottom: hour" +hour );
+        Log.e(TAG, "fab_bottom: minute" +minute );
         txData[0] = Byte.parseByte(hour);
         txData[1] = Byte.parseByte(minute);
         if (test_model.equals("test")){
@@ -822,9 +826,11 @@ public class MainActivity extends AppCompatActivity{
                 txData[56] = 0x66;
             }
         }
-        // anlık saat ve dakika bilgisini al
-        getDateTime();
+
         // Datalar gönderiliyor
+        for (int i = 0; i < txData.length;i++){
+            Log.e(TAG, "tx data "+i+". data = "+txData[i] );
+        }
         try {
             isTxFull = true;
             sendReceive.write(txData);
