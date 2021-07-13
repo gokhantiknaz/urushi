@@ -24,9 +24,7 @@
                 android:id="@+id/sp_channels"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="75dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="75dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:spinnerMode="dialog" />
@@ -35,7 +33,7 @@
                 android:id="@+id/linechart"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="0dp"
                 android:background="@color/white">
 
             </com.github.mikephil.charting.charts.LineChart>
@@ -238,6 +236,17 @@
                         android:text="Akşam" />
 
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_closeConnection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:onClick="btn_closeConnection"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="Bağlantıyı Kes" />
 
             </LinearLayout>
         </LinearLayout>

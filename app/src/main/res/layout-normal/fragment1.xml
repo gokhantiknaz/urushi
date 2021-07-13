@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
     android:background="@drawable/mainbg"
     tools:context="com.urushiLeds.urushileds.MainActivity">
 
@@ -24,9 +25,7 @@
                 android:id="@+id/sp_channels"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="75dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="75dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:spinnerMode="dialog" />
@@ -35,7 +34,7 @@
                 android:id="@+id/linechart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="0dp"
                 android:background="@color/white">
 
             </com.github.mikephil.charting.charts.LineChart>
@@ -43,7 +42,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -196,7 +195,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:text="Gün doğumu" />
@@ -205,7 +204,7 @@
                         android:id="@+id/btn_g"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:text="Güneş" />
@@ -221,9 +220,9 @@
                     <Button
                         android:id="@+id/btn_gb"
                         android:layout_width="wrap_content"
-                        android:layout_height="40sp"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="3dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:text="Gün Batımı" />
@@ -231,13 +230,24 @@
                     <Button
                         android:id="@+id/btn_a"
                         android:layout_width="wrap_content"
-                        android:layout_height="40sp"
-                        android:layout_marginTop="5dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="3dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:text="Akşam" />
 
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_closeConnection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:onClick="btn_closeConnection"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="Bağlantıyı Kes" />
 
             </LinearLayout>
         </LinearLayout>

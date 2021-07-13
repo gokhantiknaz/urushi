@@ -108,7 +108,10 @@ public class BluetoothScanActivity extends AppCompatActivity {
             arrayList_bleDevices.clear();
             Set<BluetoothDevice> bt = bluetoothAdapter.getBondedDevices();
             for (BluetoothDevice bluetoothDevice : bt){
-                arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(),bluetoothDevice.getAddress()));
+                if (bluetoothDevice.getName().contains("URUSHI")){
+                    arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(),bluetoothDevice.getAddress()));
+                }
+                //arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(),bluetoothDevice.getAddress()));
             }
             mRecylerView.setAdapter(mAdapter);
         }else{

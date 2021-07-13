@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity{
                         fab_bottom.setEnabled(true);
                         tv_status.setText("Bağlantı kesildi");
                         tv_status.setTextColor(getResources().getColor(R.color.design_default_color_error));
-                        closeBluetooth();
+                        //closeBluetooth();
                     }
 
                     break;
@@ -843,6 +843,10 @@ public class MainActivity extends AppCompatActivity{
         }
 
 
+    }
+
+    public void btn_closeConnection(View view) {
+        closeBluetooth();
     }
 
     private class ClientClass extends Thread{

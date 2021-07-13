@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,10 +20,9 @@
             android:id="@+id/textView11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="@font/alice"
+            android:layout_marginBottom="80dp"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="Phaton Palette"
             android:textColor="@color/white" />
 
         <TextView
@@ -41,7 +40,7 @@
 
             <TextView
                 android:id="@+id/tv_testSeekBar1"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="0dp"
@@ -56,7 +55,9 @@
                 android:layout_marginTop="0dp"
 
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="0dp" />
+                android:layout_marginBottom="0dp"
+                android:progressTint="@android:color/holo_orange_dark"
+                android:thumbTint="@android:color/holo_orange_dark" />
         </LinearLayout>
 
         <TextView
@@ -74,7 +75,7 @@
 
             <TextView
                 android:id="@+id/tv_testSeekBar2"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="0dp"
@@ -89,7 +90,9 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="0dp"
-                android:max="100" />
+                android:max="100"
+                android:progressTint="@android:color/holo_orange_dark"
+                android:thumbTint="@android:color/holo_orange_dark" />
         </LinearLayout>
 
         <TextView
@@ -107,7 +110,7 @@
 
             <TextView
                 android:id="@+id/tv_testSeekBar3"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="0dp"
@@ -122,7 +125,9 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="0dp"
-                android:max="100" />
+                android:max="100"
+                android:progressTint="@android:color/holo_orange_dark"
+                android:thumbTint="@android:color/holo_orange_dark" />
         </LinearLayout>
 
         <TextView
@@ -140,7 +145,7 @@
 
             <TextView
                 android:id="@+id/tv_testSeekBar4"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="0dp"
@@ -155,7 +160,9 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="0dp"
-                android:max="100" />
+                android:max="100"
+                android:progressTint="@android:color/holo_orange_dark"
+                android:thumbTint="@android:color/holo_orange_dark" />
         </LinearLayout>
 
     </LinearLayout>
