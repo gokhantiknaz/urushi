@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
@@ -17,7 +18,7 @@ import com.urushi.urushileds.R;
 
 public class Fragment2 extends Fragment {
 
-    private Switch mSwitch_fmajor,mSwitch_sMajor,mSwitch_sMax,mSwitch_fMax,mswitch_manual;
+    private Button btn_custom,btn_fmajor,btn_smajor,btn_fmax,btn_smax;
     private ImageButton ib_back;
     LocalDataManager localDataManager;
 
@@ -37,131 +38,163 @@ public class Fragment2 extends Fragment {
         localDataManager = new LocalDataManager();
         String model = localDataManager.getSharedPreference(getContext(),"model","manual");
         if (model.equals(MODEL_MANUAL)){
-            mswitch_manual.setChecked(true);
-            mSwitch_fmajor.setChecked(false);
-            mSwitch_sMajor.setChecked(false);
-            mSwitch_fMax.setChecked(false);
-            mSwitch_sMax.setChecked(false);
+            btn_custom.setText("Seçili");
+            btn_custom.setBackgroundColor(getResources().getColor(R.color.accent));
         }else if (model.equals(MODEL_FMAJOR)){
-            mswitch_manual.setChecked(false);
-            mSwitch_fmajor.setChecked(true);
-            mSwitch_sMajor.setChecked(false);
-            mSwitch_fMax.setChecked(false);
-            mSwitch_sMax.setChecked(false);
+            btn_fmajor.setText("Seçili");
+            btn_fmajor.setBackgroundColor(getResources().getColor(R.color.accent));
         }else if (model.equals(MODEL_SMAJOR)){
-            mswitch_manual.setChecked(false);
-            mSwitch_fmajor.setChecked(false);
-            mSwitch_sMajor.setChecked(true);
-            mSwitch_fMax.setChecked(false);
-            mSwitch_sMax.setChecked(false);
+            btn_smajor.setText("Seçili");
+            btn_smajor.setBackgroundColor(getResources().getColor(R.color.accent));
         }else if (model.equals(MODEL_FMAX)){
-            mswitch_manual.setChecked(false);
-            mSwitch_fmajor.setChecked(false);
-            mSwitch_sMajor.setChecked(false);
-            mSwitch_fMax.setChecked(true);
-            mSwitch_sMax.setChecked(false);
+            btn_fmax.setText("Seçili");
+            btn_fmax.setBackgroundColor(getResources().getColor(R.color.accent));
         }else if (model.equals(MODEL_SMAX)){
-            mswitch_manual.setChecked(false);
-            mSwitch_fmajor.setChecked(false);
-            mSwitch_sMajor.setChecked(false);
-            mSwitch_fMax.setChecked(false);
-            mSwitch_sMax.setChecked(true);
+            btn_smax.setText("Seçili");
+            btn_smax.setBackgroundColor(getResources().getColor(R.color.accent));
         }
 
-        switchSettings();
+        btn_custom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                btn_custom.setText("Seçili");
+                btn_custom.setBackgroundColor(getResources().getColor(R.color.accent));
+
+                btn_fmajor.setText("Seç");
+                btn_fmajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smajor.setText("Seç");
+                btn_smajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_fmax.setText("Seç");
+                btn_fmax.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smax.setText("Seç");
+                btn_smax.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                localDataManager.setSharedPreference(getContext(),"model",MODEL_MANUAL);
+                localDataManager.setSharedPreference(getContext(),"test_model","false");
+                sendDatatoFragment("model",MODEL_MANUAL);
+
+            }
+        });
+
+        btn_smax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                btn_custom.setText("Seç");
+                btn_custom.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_fmajor.setText("Seç");
+                btn_fmajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smajor.setText("Seç");
+                btn_smajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_fmax.setText("Seç");
+                btn_fmax.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smax.setText("Seçili");
+                btn_smax.setBackgroundColor(getResources().getColor(R.color.accent));
+
+                localDataManager.setSharedPreference(getContext(),"model",MODEL_SMAX);
+                localDataManager.setSharedPreference(getContext(),"test_model","false");
+                sendDatatoFragment("model",MODEL_SMAX);
+
+            }
+        });
+
+        btn_fmax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                btn_custom.setText("Seç");
+                btn_custom.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_fmajor.setText("Seç");
+                btn_fmajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smajor.setText("Seç");
+                btn_smajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_fmax.setText("Seçili");
+                btn_fmax.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smax.setText("Seç");
+                btn_smax.setBackgroundColor(getResources().getColor(R.color.accent));
+
+                localDataManager.setSharedPreference(getContext(),"model",MODEL_FMAX);
+                localDataManager.setSharedPreference(getContext(),"test_model","false");
+                sendDatatoFragment("model",MODEL_FMAX);
+            }
+        });
+
+        btn_smajor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                btn_custom.setText("Seç");
+                btn_custom.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_fmajor.setText("Seç");
+                btn_fmajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smajor.setText("Seçili");
+                btn_smajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_fmax.setText("Seç");
+                btn_fmax.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smax.setText("Seç");
+                btn_smax.setBackgroundColor(getResources().getColor(R.color.accent));
+
+                localDataManager.setSharedPreference(getContext(),"model",MODEL_SMAJOR);
+                localDataManager.setSharedPreference(getContext(),"test_model","false");
+                sendDatatoFragment("model",MODEL_SMAJOR);
+            }
+        });
+
+        btn_fmajor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                btn_custom.setText("Seç");
+                btn_custom.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_fmajor.setText("Seçili");
+                btn_fmajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smajor.setText("Seç");
+                btn_smajor.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_fmax.setText("Seç");
+                btn_fmax.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+                btn_smax.setText("Seç");
+                btn_smax.setBackgroundColor(getResources().getColor(R.color.accent));
+
+                localDataManager.setSharedPreference(getContext(),"model",MODEL_FMAJOR);
+                localDataManager.setSharedPreference(getContext(),"test_model","false");
+                sendDatatoFragment("model",MODEL_FMAJOR);
+            }
+        });
 
         return view;
     }
 
     public void init(View view){
-        mSwitch_fmajor = view.findViewById(R.id.sw_fmajor);
-        mSwitch_fMax = view.findViewById(R.id.sw_fmax);
-        mSwitch_sMajor = view.findViewById(R.id.sw_smajor);
-        mSwitch_sMax = view.findViewById(R.id.sw_smax);
-        mswitch_manual = view.findViewById(R.id.sw_manual);
+
+        btn_custom = view.findViewById(R.id.btn_modelCustom);
+        btn_fmajor = view.findViewById(R.id.btn_modelFmajor);
+        btn_smajor = view.findViewById(R.id.btn_modelSmajor);
+        btn_fmax = view.findViewById(R.id.btn_modelfmax);
+        btn_smax = view.findViewById(R.id.btn_modelSmax);
+
         ib_back = view.findViewById(R.id.ib_back);
 
         ib_click();
-    }
-
-    public void switchSettings(){
-        mSwitch_sMax.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked){
-                    mSwitch_sMax.setText("AKTİF");
-                    localDataManager.setSharedPreference(getContext(),"model",MODEL_SMAX);
-                    localDataManager.setSharedPreference(getContext(),"test_model","false");
-                    sendDatatoFragment("model",MODEL_SMAX);
-                }else{
-                    mSwitch_sMax.setText("PASİF");
-                }
-
-            }
-        });
-
-        mSwitch_sMajor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked){
-                    localDataManager.setSharedPreference(getContext(),"model",MODEL_SMAJOR);
-                    localDataManager.setSharedPreference(getContext(),"test_model","false");
-                    mSwitch_sMajor.setText("AKTİF");
-                    sendDatatoFragment("model",MODEL_SMAJOR);
-                }else{
-                    mSwitch_sMajor.setText("PASİF");
-                }
-
-            }
-        });
-
-        mSwitch_fMax.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked){
-                    localDataManager.setSharedPreference(getContext(),"model",MODEL_FMAX);
-                    localDataManager.setSharedPreference(getContext(),"test_model","false");
-                    mSwitch_fMax.setText("AKTİF");
-                    sendDatatoFragment("model",MODEL_FMAX);
-                }else{
-                    mSwitch_fMax.setText("PASİF");
-                }
-
-            }
-        });
-
-        mSwitch_fmajor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked){
-                    localDataManager.setSharedPreference(getContext(),"model",MODEL_FMAJOR);
-                    localDataManager.setSharedPreference(getContext(),"test_model","false");
-                    mSwitch_fmajor.setText("AKTİF");
-                    sendDatatoFragment("model",MODEL_FMAJOR);
-                }else{
-                    mSwitch_fmajor.setText("PASİF");
-                }
-
-            }
-        });
-
-        mswitch_manual.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    localDataManager.setSharedPreference(getContext(),"model",MODEL_MANUAL);
-                    localDataManager.setSharedPreference(getContext(),"test_model","false");
-                    mswitch_manual.setText("AKTİF");
-                    sendDatatoFragment("model",MODEL_MANUAL);
-                }else{
-                    mswitch_manual.setText("PASİF");
-                }
-            }
-        });
     }
 
     public void sendDatatoFragment(String key, String message){

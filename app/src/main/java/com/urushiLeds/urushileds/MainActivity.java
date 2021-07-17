@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.urushiLeds.urushileds.Class.LocalDataManager;
+import com.urushiLeds.urushileds.Class.Models;
 import com.urushiLeds.urushileds.Fragment.Fragment1;
 import com.urushiLeds.urushileds.Fragment.Fragment2;
 import com.urushiLeds.urushileds.Fragment.Fragment3;
@@ -40,6 +41,8 @@ import java.util.Date;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity{
+
+    private ArrayList<Models> modelsArrayList = new ArrayList<>();
 
     BottomNavigationView bottomNavigationView;
 
@@ -89,7 +92,15 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+
+        modelsArrayList.add(new Models("CUSTOM","Channel 1","Channel 2","Channel 3","Channel 4",4));
+        modelsArrayList.add(new Models("F-MAJOR","Cool White","Wide Spectrum",null,null,2));
+        modelsArrayList.add(new Models("S-MAJOR","Deep Blue","Aqua Sun",null,null,2));
+        modelsArrayList.add(new Models("F-MAX","Cool White","Full Spectrum","Reddish White","Blueish White",4));
+        modelsArrayList.add(new Models("S-MAX","Deep Blue","Aqua Sun","Magenta","Sky Blue",4));
+
         localDataManager.setSharedPreference(getApplicationContext(),"test_model","false");
+
         if (findViewById(R.id.frame) != null) {
             if (savedInstanceState != null){
                 return;
@@ -259,9 +270,8 @@ public class MainActivity extends AppCompatActivity{
                     }else{
                         Log.e(TAG,"Tüm cihazlara veriler gönderildi.");
                         fab_bottom.setEnabled(true);
-                        tv_status.setText("Bağlantı kesildi");
-                        tv_status.setTextColor(getResources().getColor(R.color.design_default_color_error));
-                        //closeBluetooth();
+                        tv_status.setText("Bağlı");
+                        tv_status.setTextColor(Color.GREEN);
                     }
 
                     break;
@@ -319,7 +329,6 @@ public class MainActivity extends AppCompatActivity{
                         clientClass.start();
 
                         sendReceive.write(txData);
-                        Log.e(TAG,"399. Diğer cihaza veri gönderildi.");
 
                         Message message = Message.obtain();
                         message.what = STATE_MESSAGE_ACK_WAIT;

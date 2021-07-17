@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="10dp"
     android:background="@drawable/mainbg"
     tools:context="com.urushiLeds.urushileds.MainActivity">
 
@@ -244,9 +243,9 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
-                    android:onClick="btn_closeConnection"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:onClick="btn_closeConnection"
                     android:text="Bağlantıyı Kes" />
 
             </LinearLayout>

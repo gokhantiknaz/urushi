@@ -26,23 +26,19 @@
                 android:id="@+id/tv_manual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="2"
                 android:fontFamily="@font/alice"
                 android:gravity="center"
                 android:text="CUSTOM"
                 android:textColor="@color/accent" />
 
-            <Switch
-                android:id="@+id/sw_manual"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn_modelCustom"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:buttonTint="@color/accent"
-                android:fontFamily="@font/alice"
-                android:gravity="center"
-                android:showText="false"
-                android:text="KAPALI"
-                android:textColor="@color/accent" />
+                android:text="Seç"
+                app:cornerRadius="30dp" />
 
         </LinearLayout>
 
@@ -56,23 +52,19 @@
                 android:id="@+id/tv_fmajor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="2"
                 android:fontFamily="@font/alice"
                 android:gravity="center"
                 android:text="F-MAJOR"
                 android:textColor="@color/accent" />
 
-            <Switch
-                android:id="@+id/sw_fmajor"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn_modelFmajor"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:buttonTint="@color/accent"
-                android:fontFamily="@font/alice"
-                android:gravity="center"
-                android:showText="false"
-                android:text="KAPALI"
-                android:textColor="@color/accent" />
+                android:text="Seç"
+                app:cornerRadius="30dp" />
 
         </LinearLayout>
 
@@ -86,21 +78,20 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="2"
                 android:fontFamily="@font/alice"
                 android:gravity="center"
                 android:text="S-MAJOR"
                 android:textColor="@color/accent" />
 
-            <Switch
-                android:id="@+id/sw_smajor"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn_modelSmajor"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:fontFamily="@font/alice"
-                android:gravity="center"
-                android:text="KAPALI"
-                android:textColor="@color/accent" />
+                android:text="Seç"
+                app:cornerRadius="30dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -113,21 +104,20 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="2"
                 android:fontFamily="@font/alice"
                 android:gravity="center"
                 android:text="F-MAX"
                 android:textColor="@color/accent" />
 
-            <Switch
-                android:id="@+id/sw_fmax"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn_modelfmax"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:fontFamily="@font/alice"
-                android:gravity="center"
-                android:text="KAPALI"
-                android:textColor="@color/accent" />
+                android:text="Seç"
+                app:cornerRadius="30dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -140,21 +130,20 @@
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="2"
                 android:fontFamily="@font/alice"
                 android:gravity="center"
                 android:text="S-MAX"
                 android:textColor="@color/accent" />
 
-            <Switch
-                android:id="@+id/sw_smax"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn_modelSmax"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:fontFamily="@font/alice"
-                android:gravity="center"
-                android:text="KAPALI"
-                android:textColor="@color/accent" />
+                android:text="Seç"
+                app:cornerRadius="30dp" />
+
         </LinearLayout>
     </LinearLayout>
 
