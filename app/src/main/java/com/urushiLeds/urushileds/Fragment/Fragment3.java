@@ -78,8 +78,8 @@ public class Fragment3 extends Fragment {
 
             tv_sb1title.setText("Cool White");
             tv_sb2title.setText("Full Spectrum");
-            tv_sb1title.setText("Reddish White");
-            tv_sb2title.setText("Blueish Spectrum");
+            tv_sb3title.setText("Reddish White");
+            tv_sb4title.setText("Blueish Spectrum");
 
             tv_testSeekBar1.setVisibility(View.VISIBLE);
             tv_testSeekBar2.setVisibility(View.VISIBLE);
@@ -98,8 +98,8 @@ public class Fragment3 extends Fragment {
 
             tv_sb1title.setText("Deep Blue");
             tv_sb2title.setText("Aqua Sun");
-            tv_sb1title.setText("Magenta");
-            tv_sb2title.setText("Sky Blue");
+            tv_sb3title.setText("Magenta");
+            tv_sb4title.setText("Sky Blue");
 
             tv_testSeekBar1.setVisibility(View.VISIBLE);
             tv_testSeekBar2.setVisibility(View.VISIBLE);

@@ -267,8 +267,9 @@ public class MainActivity extends AppCompatActivity{
                         clientClass = new ClientClass(device_id);
                         clientClass.start();
 
-                    }else{
+                    }else if (socket.isConnected()){
                         Log.e(TAG,"Tüm cihazlara veriler gönderildi.");
+                        Toast.makeText(getApplicationContext(),"Tüm cihazlara verile gönderildi",Toast.LENGTH_LONG).show();
                         fab_bottom.setEnabled(true);
                         tv_status.setText("Bağlı");
                         tv_status.setTextColor(Color.GREEN);
@@ -960,6 +961,8 @@ public class MainActivity extends AppCompatActivity{
             }
         }
 
+        tv_status.setText("Bağlantı Kesildi");
+        tv_status.setTextColor(Color.RED);
         Log.e(TAG,"Bluetooth soket kapatıldı");
     }
 

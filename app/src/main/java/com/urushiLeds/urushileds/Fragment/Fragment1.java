@@ -569,10 +569,38 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                 if (timename.equals("Gün Doğumu")){
                     gdh = Integer.parseInt(alarm1_hour);
                     gdm = Integer.parseInt(alarm1_minute);
-                    if (gdh < mgh && gdh < mgbh && gdh < mah){
-                        btn_gd.setText("Gün Doğumu "+alarm1_hour+":" + alarm1_minute);
-                        localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdh",alarm1_hour);
-                        localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdm",alarm1_minute);
+                    if (gdh <= mgh && gdh <= mgbh && gdh <= mah){
+                        if (gdh == mgh){
+                            if (gdm < mgm){
+                                btn_gd.setText("Gün Doğumu "+alarm1_hour+":" + alarm1_minute);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdh",alarm1_hour);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdm",alarm1_minute);
+                            }else {
+                                Toast.makeText(getContext(),"Yanlış değer girdiniz gün doğumu vakti diğer vakitlerden küçük olmalıdır",Toast.LENGTH_LONG).show();
+                            }
+                        }else if (gdh == mgbh){
+                            if (gdm < mgbm){
+                                btn_gd.setText("Gün Doğumu "+alarm1_hour+":" + alarm1_minute);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdh",alarm1_hour);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdm",alarm1_minute);
+                            }else {
+                                Toast.makeText(getContext(),"Yanlış değer girdiniz gün doğumu vakti diğer vakitlerden küçük olmalıdır",Toast.LENGTH_LONG).show();
+
+                            }
+                        }else if (gdh == mah){
+                            if (gdm < mam){
+                                btn_gd.setText("Gün Doğumu "+alarm1_hour+":" + alarm1_minute);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdh",alarm1_hour);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdm",alarm1_minute);
+                            }else {
+                                Toast.makeText(getContext(),"Yanlış değer girdiniz gün doğumu vakti diğer vakitlerden küçük olmalıdır",Toast.LENGTH_LONG).show();
+                            }
+                        }else {
+                            btn_gd.setText("Gün Doğumu "+alarm1_hour+":" + alarm1_minute);
+                            localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdh",alarm1_hour);
+                            localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gdm",alarm1_minute);
+                        }
+
                     }else {
                         Toast.makeText(getContext(),"Yanlış değer girdiniz gün doğumu vakti diğer vakitlerden küçük olmalıdır!",Toast.LENGTH_LONG).show();
                     }
@@ -581,11 +609,37 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                     gh = Integer.parseInt(alarm1_hour);
                     gm = Integer.parseInt(alarm1_minute);
                     Log.d(TAG, "güneş saat:"+gh+" güneş dakika : "+gm);
-                    if (gh > mgdh && gh < mgbh && gh < mah){
-                        btn_g.setText("Güneş "+alarm1_hour+":"+alarm1_minute);
-                        Log.d(TAG, "Güneş "+alarm1_hour+":"+alarm1_minute);
-                        localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gh",alarm1_hour);
-                        localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gm",alarm1_minute);
+                    if (gh >= mgdh && gh <= mgbh && gh <= mah){
+                        if (gh == mgdh){
+                            if (gm > mgdm){
+                                btn_g.setText("Güneş "+alarm1_hour+":"+alarm1_minute);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gh",alarm1_hour);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gm",alarm1_minute);
+                            }else {
+                                Toast.makeText(getContext(),"Yanlış değer girdiniz güneş vakti gün doğumundan büyük diğer vakitlerden küçük olmalıdır!",Toast.LENGTH_LONG).show();
+                            }
+                        } else if (gh == mgbh){
+                            if (gm < gbm){
+                                btn_g.setText("Güneş "+alarm1_hour+":"+alarm1_minute);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gh",alarm1_hour);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gm",alarm1_minute);
+                            }else {
+                                Toast.makeText(getContext(),"Yanlış değer girdiniz güneş vakti gün doğumundan büyük diğer vakitlerden küçük olmalıdır!",Toast.LENGTH_LONG).show();
+                            }
+                        } else if (gh == mah){
+                            if (gm < mam){
+                                btn_g.setText("Güneş "+alarm1_hour+":"+alarm1_minute);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gh",alarm1_hour);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gm",alarm1_minute);
+                            }else {
+                                Toast.makeText(getContext(),"Yanlış değer girdiniz güneş vakti gün doğumundan büyük diğer vakitlerden küçük olmalıdır!",Toast.LENGTH_LONG).show();
+                            }
+                        }else {
+                            btn_g.setText("Güneş "+alarm1_hour+":"+alarm1_minute);
+                            localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gh",alarm1_hour);
+                            localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gm",alarm1_minute);
+                        }
+
                     }else {
                         Toast.makeText(getContext(),"Yanlış değer girdiniz güneş vakti gün doğumundan büyük diğer vakitlerden küçük olmalıdır!",Toast.LENGTH_LONG).show();
                     }
@@ -593,10 +647,36 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                 }else if (timename.equals("Gün Batımı")){
                     gbh = Integer.parseInt(alarm1_hour);
                     gbm = Integer.parseInt(alarm1_minute);
-                    if (gbh > mgdh && gbh > mgh && gbh < mah){
-                        btn_gb.setText("Gün Batımı "+alarm1_hour+":"+ alarm1_minute);
-                        localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbh",alarm1_hour);
-                        localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbm",alarm1_minute);
+                    if (gbh >= mgdh && gbh >= mgh && gbh <= mah){
+                        if (gbh == mgdh){
+                            if (gbm > mgdm){
+                                btn_gb.setText("Gün Batımı "+alarm1_hour+":"+ alarm1_minute);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbh",alarm1_hour);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbm",alarm1_minute);
+                            }else {
+                                Toast.makeText(getContext(),"Yanlış değer girdiniz gün batımı vakti gün doğumundan, güneşten büyük akşam vaktinden küçük olmalıdır!",Toast.LENGTH_LONG).show();
+                            }
+                        } else if (gbh == mgh){
+                            if (gbm > mgm){
+                                btn_gb.setText("Gün Batımı "+alarm1_hour+":"+ alarm1_minute);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbh",alarm1_hour);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbm",alarm1_minute);
+                            }else {
+                                Toast.makeText(getContext(),"Yanlış değer girdiniz gün batımı vakti gün doğumundan, güneşten büyük akşam vaktinden küçük olmalıdır!",Toast.LENGTH_LONG).show();
+                            }
+                        } else if (gbh == mah){
+                            if (gbm < mam){
+                                btn_gb.setText("Gün Batımı "+alarm1_hour+":"+ alarm1_minute);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbh",alarm1_hour);
+                                localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbm",alarm1_minute);
+                            }else {
+                                Toast.makeText(getContext(),"Yanlış değer girdiniz gün batımı vakti gün doğumundan, güneşten büyük akşam vaktinden küçük olmalıdır!",Toast.LENGTH_LONG).show();
+                            }
+                        }else {
+                            btn_gb.setText("Gün Batımı "+alarm1_hour+":"+ alarm1_minute);
+                            localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbh",alarm1_hour);
+                            localDataManager.setSharedPreference(getContext(),model+selectedChannel+"gbm",alarm1_minute);
+                        }
                     }else {
                         Toast.makeText(getContext(),"Yanlış değer girdiniz gün batımı vakti gün doğumundan, güneşten büyük akşam vaktinden küçük olmalıdır!",Toast.LENGTH_LONG).show();
                     }
@@ -604,9 +684,35 @@ public class Fragment1 extends Fragment implements OnChartGestureListener, OnCha
                     ah = Integer.parseInt(alarm1_hour);
                     am = Integer.parseInt(alarm1_minute);
                     if (ah > mgdh && ah > mgh && ah > mgbh){
-                        btn_a.setText("Akşam "+alarm1_hour+":" + alarm1_minute);
-                        localDataManager.setSharedPreference(getContext(),model+selectedChannel+"ah",alarm1_hour);
-                        localDataManager.setSharedPreference(getContext(),model+selectedChannel+"am",alarm1_minute);
+                       if (ah == mgdh){
+                           if (am > mgdm){
+                               btn_a.setText("Akşam "+alarm1_hour+":" + alarm1_minute);
+                               localDataManager.setSharedPreference(getContext(),model+selectedChannel+"ah",alarm1_hour);
+                               localDataManager.setSharedPreference(getContext(),model+selectedChannel+"am",alarm1_minute);
+                           }else {
+                               Toast.makeText(getContext(),"Yanlış değer girdiniz akşam vakti diğer vakitlerden büyük olmalıdır!",Toast.LENGTH_LONG).show();
+                           }
+                       } else if (ah == mgh){
+                           if (am > mgm){
+                               btn_a.setText("Akşam "+alarm1_hour+":" + alarm1_minute);
+                               localDataManager.setSharedPreference(getContext(),model+selectedChannel+"ah",alarm1_hour);
+                               localDataManager.setSharedPreference(getContext(),model+selectedChannel+"am",alarm1_minute);
+                           }else {
+                               Toast.makeText(getContext(),"Yanlış değer girdiniz akşam vakti diğer vakitlerden büyük olmalıdır!",Toast.LENGTH_LONG).show();
+                           }
+                       } else if (ah == mgbh){
+                           if (am > mgbm){
+                               btn_a.setText("Akşam "+alarm1_hour+":" + alarm1_minute);
+                               localDataManager.setSharedPreference(getContext(),model+selectedChannel+"ah",alarm1_hour);
+                               localDataManager.setSharedPreference(getContext(),model+selectedChannel+"am",alarm1_minute);
+                           }else {
+                               Toast.makeText(getContext(),"Yanlış değer girdiniz akşam vakti diğer vakitlerden büyük olmalıdır!",Toast.LENGTH_LONG).show();
+                           }
+                       } else {
+                           btn_a.setText("Akşam "+alarm1_hour+":" + alarm1_minute);
+                           localDataManager.setSharedPreference(getContext(),model+selectedChannel+"ah",alarm1_hour);
+                           localDataManager.setSharedPreference(getContext(),model+selectedChannel+"am",alarm1_minute);
+                       }
                     }else {
                         Toast.makeText(getContext(),"Yanlış değer girdiniz akşam vakti diğer vakitlerden büyük olmalıdır!",Toast.LENGTH_LONG).show();
                     }
