@@ -360,7 +360,7 @@ public class MainActivity extends AppCompatActivity{
         if (test_model.equals("test")){
             txData[0] = 0x65;
             txData[1] = 0x06;
-            txData[2] = 0x05;
+            txData[2] = 0xA;
             String test_f1 = localDataManager.getSharedPreference(getApplicationContext(),"testf1","0");
             String test_f2 = localDataManager.getSharedPreference(getApplicationContext(),"testf2","0");
             String test_f3 = localDataManager.getSharedPreference(getApplicationContext(),"testf3","0");
