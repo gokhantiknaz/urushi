@@ -2,12 +2,15 @@ package com.urushiLeds.urushileds;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class BluetoothScanActivity extends AppCompatActivity {
-
     private int ble_request_en;
     private BluetoothAdapter bluetoothAdapter;
     private Intent intent_ble;
@@ -46,25 +48,25 @@ public class BluetoothScanActivity extends AppCompatActivity {
         init();
 
         if (bluetoothAdapter == null) {
-            Toast.makeText(getApplicationContext(),"Bluetooth desteklenmiyor ... ",Toast.LENGTH_LONG).show();
-        }else {
-            if (!bluetoothAdapter.isEnabled()){
-                startActivityForResult(intent_ble,ble_request_en);
+            Toast.makeText(getApplicationContext(), "Bluetooth desteklenmiyor ... ", Toast.LENGTH_LONG).show();
+        } else {
+            if (!bluetoothAdapter.isEnabled()) {
+                startActivityForResult(intent_ble, ble_request_en);
             }
         }
 
         // cihaz seçildiğinde buraya dallanacak buradan bir sonraki aktiviteye seçilen cihazın device_name ve device_id si gönderilecek
         mAdapter.setCallback(new CallBackDevice() {
             @Override
-            public void listenerMethod(String device_name,String device_id,boolean action,int pos) {
-                if (action == true){
-                    if(!device_id.isEmpty()){
+            public void listenerMethod(String device_name, String device_id, boolean action, int pos) {
+                if (action == true) {
+                    if (!device_id.isEmpty()) {
                         bleDeviceList.add(device_id);
                     }
                     //btn_scan.setText("Bağlan");
-                    Log.e("pos",""+device_id + " " + pos);
+                    Log.e("pos", "" + device_id + " " + pos);
 
-                }else if (action == false){
+                } else if (action == false) {
                     //bleDeviceList.clear();
                     //btn_scan(view);
 /*                    bleDeviceList.set(pos,"null");
@@ -76,7 +78,7 @@ public class BluetoothScanActivity extends AppCompatActivity {
         });
     }
 
-    public void init(){
+    public void init() {
         btn_scan = findViewById(R.id.btn_scan);
         mRecylerView = findViewById(R.id.rv_ble);
 
@@ -88,7 +90,7 @@ public class BluetoothScanActivity extends AppCompatActivity {
         mRecylerView.setHasFixedSize(true);
         mRecylerView.setItemViewCacheSize(50);
         mRecylerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new DeviceAdapter(arrayList_bleDevices,callBackDevice);
+        mAdapter = new DeviceAdapter(arrayList_bleDevices, callBackDevice);
     }
 
     @Override
@@ -102,13 +104,16 @@ public class BluetoothScanActivity extends AppCompatActivity {
             }
         }
     }
-
     public void btn_scan(View view) {
-        if (bleDeviceList.isEmpty() && !bluetoothAdapter.getAddress().isEmpty()){
+        if (bleDeviceList.isEmpty() && !bluetoothAdapter.getAddress().isEmpty()) {
             arrayList_bleDevices.clear();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "Check Bluetooth permissions", Toast.LENGTH_LONG).show();
+                return;
+            }
             Set<BluetoothDevice> bt = bluetoothAdapter.getBondedDevices();
             for (BluetoothDevice bluetoothDevice : bt){
-                if (bluetoothDevice.getName().contains("")){
+                if (bluetoothDevice.getName().contains("URUSHI") || bluetoothDevice.getName().contains("urushi") ){
                     arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(),bluetoothDevice.getAddress()));
                 }
                 //arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(),bluetoothDevice.getAddress()));
