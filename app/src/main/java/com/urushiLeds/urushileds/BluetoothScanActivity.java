@@ -1,5 +1,6 @@
 package com.urushiLeds.urushileds;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -52,7 +53,6 @@ public class BluetoothScanActivity extends AppCompatActivity {
                     == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(BluetoothScanActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 2);
                 return;
-
             }
         } else {
             if (ContextCompat.checkSelfPermission(BluetoothScanActivity.this, Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_DENIED) {
@@ -120,13 +120,28 @@ public class BluetoothScanActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        init();
+    }
     public void btn_scan(View view) {
         if (bleDeviceList.isEmpty() && !bluetoothAdapter.getAddress().isEmpty()) {
             arrayList_bleDevices.clear();
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getApplicationContext(), "Check Bluetooth permissions", Toast.LENGTH_LONG).show();
-                return;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (ContextCompat.checkSelfPermission(BluetoothScanActivity.this, Manifest.permission.BLUETOOTH_CONNECT)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "Check Bluetooth permissions  and restart application", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            } else {
+                if (ContextCompat.checkSelfPermission(BluetoothScanActivity.this, Manifest.permission.BLUETOOTH)  != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "Check Bluetooth permissions and restart application", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
+
             Set<BluetoothDevice> bt = bluetoothAdapter.getBondedDevices();
             for (BluetoothDevice bluetoothDevice : bt){
                 if (bluetoothDevice.getName().contains("URUSHI") || bluetoothDevice.getName().contains("urushi") ){
