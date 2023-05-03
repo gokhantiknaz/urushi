@@ -3,6 +3,7 @@ package com.urushiLeds.urushileds;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,6 +46,20 @@ public class BluetoothScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_scan);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (ContextCompat.checkSelfPermission(BluetoothScanActivity.this, Manifest.permission.BLUETOOTH_CONNECT)
+                    == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(BluetoothScanActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 2);
+                return;
+
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(BluetoothScanActivity.this, Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(BluetoothScanActivity.this, new String[]{Manifest.permission.BLUETOOTH}, 2);
+                return;
+            }
+        }
 
         init();
 
