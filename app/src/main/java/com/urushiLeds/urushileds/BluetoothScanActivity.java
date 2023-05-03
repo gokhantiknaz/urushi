@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -43,28 +44,50 @@ public class BluetoothScanActivity extends AppCompatActivity {
     int a = 0;
     View view;
 
+    private String[] PERMISSIONS;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_scan);
 
+        Toast.makeText(getApplicationContext(), " android version:"+Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (ContextCompat.checkSelfPermission(BluetoothScanActivity.this, Manifest.permission.BLUETOOTH_CONNECT)
-                    == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(BluetoothScanActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 2);
-                return;
-            }
+            PERMISSIONS =  new String[]{
+                    Manifest.permission.BLUETOOTH_CONNECT,
+                    Manifest.permission.BLUETOOTH_SCAN
+            };
         } else {
-            if (ContextCompat.checkSelfPermission(BluetoothScanActivity.this, Manifest.permission.BLUETOOTH) == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(BluetoothScanActivity.this, new String[]{Manifest.permission.BLUETOOTH}, 2);
-                return;
-            }
+            PERMISSIONS = new String[]{
+                    Manifest.permission.BLUETOOTH_ADMIN,
+                    Manifest.permission.BLUETOOTH
+            };
+        }
+
+        if (!hasPermission(BluetoothScanActivity.this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(BluetoothScanActivity.this, PERMISSIONS, 2);
         }
 
         init();
+    }
+
+    public void init() {
+        btn_scan = findViewById(R.id.btn_scan);
+        mRecylerView = findViewById(R.id.rv_ble);
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        intent_ble = new Intent(bluetoothAdapter.ACTION_REQUEST_ENABLE);
+        ble_request_en = 1;
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecylerView.setHasFixedSize(true);
+        mRecylerView.setItemViewCacheSize(50);
+        mRecylerView.setLayoutManager(linearLayoutManager);
+        mAdapter = new DeviceAdapter(arrayList_bleDevices, callBackDevice);
 
         if (bluetoothAdapter == null) {
-            Toast.makeText(getApplicationContext(), "Bluetooth desteklenmiyor ... ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Bluetooth desteklenmiyor... ", Toast.LENGTH_LONG).show();
         } else {
             if (!bluetoothAdapter.isEnabled()) {
                 startActivityForResult(intent_ble, ble_request_en);
@@ -94,21 +117,6 @@ public class BluetoothScanActivity extends AppCompatActivity {
         });
     }
 
-    public void init() {
-        btn_scan = findViewById(R.id.btn_scan);
-        mRecylerView = findViewById(R.id.rv_ble);
-
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        intent_ble = new Intent(bluetoothAdapter.ACTION_REQUEST_ENABLE);
-        ble_request_en = 1;
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecylerView.setHasFixedSize(true);
-        mRecylerView.setItemViewCacheSize(50);
-        mRecylerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new DeviceAdapter(arrayList_bleDevices, callBackDevice);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -120,11 +128,28 @@ public class BluetoothScanActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        init();
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Bluetooth permission granted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Bluetooth permission is denied", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    private boolean hasPermission(Context context, String... PERMISSIONS) {
+        if (context != null && PERMISSIONS != null) {
+            for (String permissions : PERMISSIONS) {
+                if (ActivityCompat.checkSelfPermission(context, permissions) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void btn_scan(View view) {
         if (bleDeviceList.isEmpty() && !bluetoothAdapter.getAddress().isEmpty()) {
             arrayList_bleDevices.clear();
@@ -136,27 +161,31 @@ public class BluetoothScanActivity extends AppCompatActivity {
                     return;
                 }
             } else {
-                if (ContextCompat.checkSelfPermission(BluetoothScanActivity.this, Manifest.permission.BLUETOOTH)  != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(BluetoothScanActivity.this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(getApplicationContext(), "Check Bluetooth permissions and restart application", Toast.LENGTH_LONG).show();
                     return;
                 }
             }
 
             Set<BluetoothDevice> bt = bluetoothAdapter.getBondedDevices();
-            for (BluetoothDevice bluetoothDevice : bt){
-                if (bluetoothDevice.getName().contains("URUSHI") || bluetoothDevice.getName().contains("urushi") ){
-                    arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(),bluetoothDevice.getAddress()));
+            for (BluetoothDevice bluetoothDevice : bt) {
+                if (bluetoothDevice.getName().contains("ikigai") || bluetoothDevice.getName().contains("IKIGAI")) {
+                    arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(), bluetoothDevice.getAddress()));
                 }
                 //arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(),bluetoothDevice.getAddress()));
             }
+            if(arrayList_bleDevices.size()==0)
+            {
+                Toast.makeText(getApplicationContext(),"No devices found",Toast.LENGTH_LONG).show();
+            }
             mRecylerView.setAdapter(mAdapter);
-        }else{
+        } else {
 
-            for (int i = 0; i < bleDeviceList.size(); i ++){
-                Log.e("deviceList",bleDeviceList.get(i).toString() + "pos : " + i);
+            for (int i = 0; i < bleDeviceList.size(); i++) {
+                Log.e("deviceList", bleDeviceList.get(i).toString() + "pos : " + i);
             }
             Intent intent = new Intent(BluetoothScanActivity.this, MainActivity.class);
-            intent.putStringArrayListExtra("bleDevicesList",bleDeviceList);
+            intent.putStringArrayListExtra("bleDevicesList", bleDeviceList);
             startActivity(intent);
             finish();
         }

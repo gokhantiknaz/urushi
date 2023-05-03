@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.frame, new Fragment4()).commit();
         }
 
-        progress = ProgressDialog.show(MainActivity.this, "Baglanıyor...", "Lütfen Bekleyin");
+        progress = ProgressDialog.show(MainActivity.this, "Bağlanıyor...", "Lütfen Bekleyin");
 
         // Gelen device id ile bluetooth bağlantısını kur.
         if (bleList.size() > 0) {
@@ -872,16 +872,6 @@ public class MainActivity extends AppCompatActivity {
         public ClientClass(String device_id) {
             device = bluetoothAdapter.getRemoteDevice(device_id);
             try {
-                if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-
-                }
                 socket = device.createRfcommSocketToServiceRecord(ESP32_UUID);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -894,16 +884,7 @@ public class MainActivity extends AppCompatActivity {
                 if (socket.isConnected()) {
                     closeBluetooth();
                 }
-                if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
+
                 socket.connect();
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
@@ -951,6 +932,7 @@ public class MainActivity extends AppCompatActivity {
                     handler.obtainMessage(STATE_MESSAGE_RECEIVED, bytes, -1, buffer).sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    break;
                 }
             }
         }
