@@ -169,7 +169,7 @@ public class BluetoothScanActivity extends AppCompatActivity {
 
             Set<BluetoothDevice> bt = bluetoothAdapter.getBondedDevices();
             for (BluetoothDevice bluetoothDevice : bt) {
-                if (bluetoothDevice.getName().contains("ikigai") || bluetoothDevice.getName().contains("IKIGAI")) {
+                if (bluetoothDevice.getName().contains("urushi") || bluetoothDevice.getName().contains("URUSHI")) {
                     arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(), bluetoothDevice.getAddress()));
                 }
                 //arrayList_bleDevices.add(new Ble_devices(bluetoothDevice.getName(),bluetoothDevice.getAddress()));
