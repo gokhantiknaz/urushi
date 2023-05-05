@@ -56,7 +56,7 @@
         android:onClick="fab_bottom"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/accent"
-        app:srcCompat="@drawable/logotab"
+        android:foreground="@drawable/logotab"
         app:layout_anchor="@id/bottom_appbar" />
 
 

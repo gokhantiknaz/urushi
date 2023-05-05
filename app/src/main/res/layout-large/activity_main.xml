@@ -51,13 +51,14 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_bottom"
-        android:theme="@style/Theme.AppCompat"
         android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:backgroundTint="@color/icons"
         android:onClick="fab_bottom"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/accent"
-        app:srcCompat="@drawable/logotab"
-        app:layout_anchor="@id/bottom_appbar" />
+        android:theme="@style/Theme.AppCompat"
+        app:layout_anchor="@id/bottom_appbar"
+        android:foreground="@drawable/logotab"
+         />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

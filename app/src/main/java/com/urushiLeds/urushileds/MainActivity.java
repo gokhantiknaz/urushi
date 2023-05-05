@@ -64,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
     SendReceive sendReceive;
     ArrayList<String> bleList = new ArrayList<>();
 
-    ArrayList<String> sendList = new ArrayList<>();
-
     private InputStream inputStream;
     private OutputStream outputStream;
 
@@ -165,13 +163,10 @@ public class MainActivity extends AppCompatActivity {
         tv_status = findViewById(R.id.tv_status);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         fab_bottom = findViewById(R.id.fab_bottom);
-
+        fab_bottom.setImageResource(R.drawable.logotab);
         bottomNavigationView.setBackground(null);
-
         bleList = getIntent().getStringArrayListExtra("bleDevicesList");
-
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
     }
 
     @Override
@@ -201,20 +196,19 @@ public class MainActivity extends AppCompatActivity {
 
             switch (msg.what) {
                 case STATE_CONNECTED:
-                    tv_status.setText("connected ... ");
+                    tv_status.setText("Bağlandı");
                     tv_status.setTextColor(Color.GREEN);
                     Log.e(TAG, "Bağlandı");
-                    if (i > 0) {
-                        if (socket.isConnected() && isTxFull) {
+                    if (i>0){
+                        if(socket.isConnected() && isTxFull){
                             sendReceive.write(txData);
-                            sendList.remove(device.getAddress());
-                            Log.e(TAG, "Diğer cihaza aynı veriler gönderildi");
+                            Log.e(TAG,"Diğer cihaza aynı veriler gönderildi");
 
                             Message message = Message.obtain();
                             message.what = STATE_MESSAGE_ACK_WAIT;
                             handler.sendMessage(message);
                         }
-                    } else {
+                    }else{
                         fab_bottom.setEnabled(true);
                     }
                     progress.dismiss();
@@ -227,12 +221,11 @@ public class MainActivity extends AppCompatActivity {
                     if (socket.isConnected()) {
                         closeBluetooth();
                     }
-                    if (sendList.size() < bleList.size()) {
+                    if (i<bleList.size()){
                         Message message = Message.obtain();
                         message.what = STATE_MESSAGE_NEXTCONNECTION_WAIT;
                         handler.sendMessage(message);
                     }
-
                     break;
                 case STATE_MESSAGE_RECEIVED:
                     tempMsg = getMessage(msg);
@@ -256,14 +249,7 @@ public class MainActivity extends AppCompatActivity {
                 case STATE_MESSAGE_NEXTCONNECTION_WAIT:
 
                     i++;
-                    String test_model = localDataManager.getSharedPreference(getApplicationContext(), "test_model", "false");
-                    boolean isSent = sendList.size() > 0;
-
-                    if (test_model.equals("test")) {
-                        isSent = i < bleList.size();
-                    }
-
-                    if (isSent) {
+                    if (i<bleList.size()){
                         Log.e(TAG, "Diğer cihaza bağlanıyor ...");
                         tv_status.setText("connecting");
                         tv_status.setTextColor(getResources().getColor(R.color.accent));
@@ -272,36 +258,38 @@ public class MainActivity extends AppCompatActivity {
                         if (socket.isConnected()) {
                             closeBluetooth();
                         }
-                        device_id = sendList.get(0);
+
+                        device_id = bleList.get(i);
+
                         clientClass = new ClientClass(device_id);
                         clientClass.start();
 
-                    } else if (socket.isConnected()) {
-                        Log.e(TAG, "Tüm cihazlara veriler gönderildi.");
-                        Toast.makeText(getApplicationContext(), "Settings send to all devices", Toast.LENGTH_LONG).show();
+                    }else if (socket.isConnected()){
+                        Log.e(TAG,"Tüm cihazlara veriler gönderildi.");
+                        Toast.makeText(getApplicationContext(),"Tüm cihazlara verile gönderildi",Toast.LENGTH_LONG).show();
                         fab_bottom.setEnabled(true);
-                        tv_status.setText("Connected");
+                        tv_status.setText("Bağlı");
                         tv_status.setTextColor(Color.GREEN);
                     }
 
                     break;
-                case STATE_MESSAGE_ACK_WAIT:
-                    Log.e(TAG, "Doğrulama kodu bekleniyor ...");
-                    tv_status.setText("Waiting for verification");
+                case STATE_MESSAGE_ACK_WAIT :
+                    Log.e(TAG,"Doğrulama kodu bekleniyor ...");
+                    tv_status.setText("doğrulama bekleniyor");
                     tv_status.setTextColor(getResources().getColor(R.color.accent));
-                    trial++;
+                    trial ++;
                     // 30.sn ACK gelmesini bekle
                     timerHandler.postDelayed(timerRunnable, 30000);
                     break;
                 case STATE_MESSAGE_WRONG_ACK_RECEIVED:
-                    Log.e(TAG, "Yanlış Doğrulama kodu alındı.");
+                    Log.e(TAG,"Yanlış Doğrulama kodu alındı.");
                     //todo yanlış ACK geldiğinde burası yapılacak !!!
-                    if (trial_ack < 3) {
+                    if (trial_ack<3){
                         sendReceive.write(txData);
                         Message message = Message.obtain();
                         message.what = STATE_MESSAGE_ACK_WAIT;
                         handler.sendMessage(message);
-                    } else {
+                    }else {
                         trial_ack = 0;
                         Message message = Message.obtain();
                         message.what = STATE_MESSAGE_NEXTCONNECTION_WAIT;
@@ -317,32 +305,35 @@ public class MainActivity extends AppCompatActivity {
     Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
-            if (trial < 3) {
+            if (trial < 3){
                 try {
                     sendReceive.write(txData);
                     Message message = Message.obtain();
                     message.what = STATE_MESSAGE_ACK_WAIT;
                     handler.sendMessage(message);
-                } catch (Exception e) {
-                    Log.e(TAG, e.getLocalizedMessage());
+                }catch (Exception e){
+                    Log.e(TAG,e.getLocalizedMessage());
                 }
-            } else {
+            }else {
                 trial = 0;
-                if (socket.isConnected()) {
+                if (socket.isConnected()){
                     closeBluetooth();
                 }
-                if (sendList.size() > 0) {
+                if (i<bleList.size()){
                     try {
-                        device_id = sendList.get(0);
+                        i ++;
+                        device_id = bleList.get(i);
                         clientClass = new ClientClass(device_id);
                         clientClass.start();
+
                         sendReceive.write(txData);
+
                         Message message = Message.obtain();
                         message.what = STATE_MESSAGE_ACK_WAIT;
                         handler.sendMessage(message);
 
-                    } catch (Exception e) {
-                        Log.e(TAG, e.getLocalizedMessage());
+                    }catch (Exception e){
+                        Log.e(TAG,e.getLocalizedMessage());
                     }
                 }
                 //timerHandler.removeCallbacks(timerRunnable);
@@ -353,20 +344,18 @@ public class MainActivity extends AppCompatActivity {
     public void fab_bottom(View view) {
         // anlık saat ve dakika bilgisini al
         getDateTime();
-        i = 0;
-        sendList = (ArrayList<String>) bleList.clone();
         fab_bottom.setEnabled(false);
-        if (!socket.isConnected()) {
-            startActivity(new Intent(MainActivity.this, BluetoothScanActivity.class));
+        if (!socket.isConnected()){
+            startActivity(new Intent(MainActivity.this,BluetoothScanActivity.class));
             finish();
         }
-        String model = localDataManager.getSharedPreference(getApplicationContext(), "model", "");
-        String test_model = localDataManager.getSharedPreference(getApplicationContext(), "test_model", "false");
-        Log.e(TAG, "fab_bottom: hour" + hour);
-        Log.e(TAG, "fab_bottom: minute" + minute);
+        String model = localDataManager.getSharedPreference(getApplicationContext(),"model","");
+        String test_model = localDataManager.getSharedPreference(getApplicationContext(),"test_model","false");
+        Log.e(TAG, "fab_bottom: hour" +hour );
+        Log.e(TAG, "fab_bottom: minute" +minute );
         txData[54] = Byte.parseByte(hour);
         txData[55] = Byte.parseByte(minute);
-        if (test_model.equals("test")) {
+        if (test_model.equals("test")){
             txData[0] = 0x65;
             txData[1] = 0x06;
             txData[2] = 0xA;
@@ -379,9 +368,10 @@ public class MainActivity extends AppCompatActivity {
             txData[5] = (byte) Integer.parseInt(test_f3);
             txData[6] = (byte) Integer.parseInt(test_f4);
 
-            for (int i = 7; i < 54; i++) {
+            for (int i = 7; i < 54; i++){
                 txData[i] = 0x00;
             }
+
             txData[56] = 0x66;
         } else {
             if (model.equals("fmajor")) {
@@ -453,7 +443,8 @@ public class MainActivity extends AppCompatActivity {
 
                 txData[56] = 0x66;
 
-            } else if (model.equals("smajor")) {
+            }
+            else if (model.equals("smajor")) {
                 txData[0] = 0x65;
                 txData[1] = 0x02;
                 txData[2] = 0x01;
@@ -514,7 +505,8 @@ public class MainActivity extends AppCompatActivity {
 
                 txData[56] = 0x66;
 
-            } else if (model.equals("fmax")) {
+            }
+            else if (model.equals("fmax")) {
                 txData[0] = 0x65;
                 txData[1] = 0x03;
                 txData[2] = 0x01;
@@ -623,7 +615,8 @@ public class MainActivity extends AppCompatActivity {
                 txData[53] = (byte) Integer.parseInt(fmax_bw_a_m);
 
                 txData[56] = 0x66;
-            } else if (model.equals("smax")) {
+            }
+            else if (model.equals("smax")) {
                 txData[0] = 0x65;
                 txData[1] = 0x04;
                 txData[2] = 0x01;
@@ -732,7 +725,8 @@ public class MainActivity extends AppCompatActivity {
                 txData[53] = (byte) Integer.parseInt(smax_sb_a_m);
 
                 txData[56] = 0x66;
-            } else {
+            }
+            else {
                 txData[0] = 0x65;
                 txData[1] = 0x05;
                 txData[2] = 0x01;
@@ -851,10 +845,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             isTxFull = true;
             sendReceive.write(txData);
-            sendList.remove(device.getAddress());
-            if (!test_model.equals("test"))
-                i++;
-            Log.e(TAG, "Veriler gönderildi.");
+           Log.e(TAG, "Veriler gönderildi.");
             Message message = Message.obtain();
             message.what = STATE_MESSAGE_ACK_WAIT;
             handler.sendMessage(message);
@@ -878,34 +869,33 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        public void run() {
+        public void run(){
             try {
                 // bağlantı kurulu ise önce kapat
-                if (socket.isConnected()) {
-                    closeBluetooth();
+                if (socket.isConnected()){
+                   closeBluetooth();
                 }
-
                 socket.connect();
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
                 Message message = Message.obtain();
-                message.what = STATE_CONNECTED;
+                message.what=STATE_CONNECTED;
                 handler.sendMessage(message);
 
             } catch (IOException e) {
                 e.printStackTrace();
 
                 Message message = Message.obtain();
-                message.what = STATE_CONNECTION_FAILED;
+                message.what=STATE_CONNECTION_FAILED;
                 handler.sendMessage(message);
             }
         }
     }
 
-    private class SendReceive extends Thread {
+    private class SendReceive extends Thread{
         private final BluetoothSocket bluetoothSocket;
 
-        public SendReceive(BluetoothSocket socket) {
+        public SendReceive(BluetoothSocket socket){
             bluetoothSocket = socket;
             InputStream tempIn = null;
             OutputStream tempOut = null;
@@ -922,14 +912,14 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        public void run() {
+        public void run(){
             byte[] buffer = new byte[1024];
             int bytes;
 
-            while (true) {
+            while (true){
                 try {
-                    bytes = inputStream.read(buffer);
-                    handler.obtainMessage(STATE_MESSAGE_RECEIVED, bytes, -1, buffer).sendToTarget();
+                    bytes =  inputStream.read(buffer);
+                    handler.obtainMessage(STATE_MESSAGE_RECEIVED,bytes,-1,buffer).sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;
@@ -937,7 +927,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        public void write(byte[] bytes) {
+        public void write(byte[] bytes){
             try {
                 outputStream.write(bytes);
             } catch (IOException e) {
@@ -946,8 +936,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void closeBluetooth() {
-        if (inputStream != null) {
+    private void closeBluetooth(){
+        if (inputStream != null){
             try {
                 inputStream.close();
             } catch (IOException e) {
@@ -955,7 +945,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (outputStream != null) {
+        if (outputStream != null){
             try {
                 outputStream.close();
             } catch (IOException e) {
@@ -963,7 +953,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (socket != null) {
+        if (socket != null){
             try {
                 socket.close();
             } catch (IOException e) {
@@ -971,7 +961,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        tv_status.setText("Connection closing...");
+        tv_status.setText("Bağlantı Kesildi");
         tv_status.setTextColor(Color.CYAN);
         Log.e(TAG, "Bluetooth soket kapatıldı");
     }
